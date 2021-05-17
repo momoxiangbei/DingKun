@@ -22,7 +22,6 @@ public class BottomSheetActivity extends AppCompatActivity {
     private FrameLayout mRootView;
     private BottomSheetBehavior mBottomSheetBehavior;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
