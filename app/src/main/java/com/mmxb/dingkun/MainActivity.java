@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.mmxb.dingkun.ui.bottomsheet.BottomSheetActivity;
+import com.mmxb.dingkun.ui.motionevent.MotionEventActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,5 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void BottomSheetActivity(View view) {
         startActivity(new Intent(this, BottomSheetActivity.class));
+    }
+
+    public void MotionEventActivity(View view) {
+        startActivity(new Intent(this, MotionEventActivity.class));
     }
 }
