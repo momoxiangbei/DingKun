@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".ui.bottomsheet.BottomSheetActivity" />
         <activity android:name=".ui.motionevent.MotionEventActivity" />
+        <activity android:name=".router.TestCallbackActivity" />
     </application>
 
 </manifest>
