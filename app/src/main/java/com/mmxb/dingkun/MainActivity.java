@@ -1,13 +1,22 @@
 package com.mmxb.dingkun;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-
+import com.mmxb.dingkun.blockcanary.BlockCanary;
+import com.mmxb.dingkun.crash.CrashHandler;
+import com.mmxb.dingkun.crash.CrashHandler2;
+import com.mmxb.dingkun.demo.MyBlockCanaryContext;
 import com.mmxb.dingkun.router.ActivityLauncher;
 import com.mmxb.dingkun.router.TestCallbackActivity;
 import com.mmxb.dingkun.ui.bottomsheet.BottomSheetActivity;
@@ -20,6 +29,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    public void test(View view) {
+//        CrashHandler.getInstance().init();
+//        CrashHandler2.getInstance().init();
+//        View v = null;
+//        v.getWidth();
+        HandlerThread mHandlerThread = new HandlerThread("check-message-coming");
+        mHandlerThread.start();
+        Handler handler = new Handler(mHandlerThread.getLooper()) {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+            }
+        };
     }
 
     public void BottomSheetActivity(View view) {
@@ -43,5 +67,23 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onActivityResult: " + resultCode);
             }
         });
+    }
+
+    public void BlockCanary(View view) {
+        BlockCanary.install(this, new MyBlockCanaryContext());
+        BlockCanary.get().start();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "run: 开始卡顿模拟");
+                try {
+                    Thread.sleep(4000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "run: 模拟卡顿结束");
+                Toast.makeText(MainActivity.this, "模拟卡顿结束", Toast.LENGTH_SHORT).show();
+            }
+        }, 100);
     }
 }
